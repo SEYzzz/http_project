@@ -1,4 +1,5 @@
-﻿
+﻿using Microsoft.AspNetCore.Mvc;
+
 namespace http_project.usecases.Task
 {
     public class Task : ITask
@@ -10,7 +11,7 @@ namespace http_project.usecases.Task
             this.repo = repo;
         }
 
-        public async Task<Guid> CreateTaskAsync()
+        public async Task<ActionResult<Guid>> CreateTaskAsync()
         {
             var task = new domain.Task.Task
             {
@@ -27,19 +28,19 @@ namespace http_project.usecases.Task
             return task.Guid;
         }
 
-        public async Task<domain.Task.TaskStatus> GetTaskStatusAsync(Guid id)
+        public async Task<ActionResult<domain.Task.TaskStatus>> GetTaskStatusAsync(Guid id)
         {
             var status = repo.GetTaskStatus(id);
             return status;
         }
 
-        public async Task<string?> GetTaskResultAsync(Guid id)  // такой себе async
+        public async Task<ActionResult<string?>> GetTaskResultAsync(Guid id)  // такой себе async
         {
             var result = repo.GetTaskResult(id);
             return result;
         }
 
-        public async Task<domain.Task.Task> GetById(Guid id)
+        public async Task<ActionResult<domain.Task.Task>> GetById(Guid id)
         {
             var task = repo.GetByIdAsync(id);
             return task;
