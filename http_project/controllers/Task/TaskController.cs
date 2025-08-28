@@ -57,7 +57,7 @@ namespace http_project.controllers.Task
             try
             {
                 var result = await service.GetTaskResultAsync(taskId);
-                return Ok(new { result = result.Value.ToString().ToLower() });
+                return Ok(new { result = result.Value!.ToString().ToLower() });
             }
             catch(InvalidOperationException e)
             {
