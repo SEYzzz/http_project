@@ -2,14 +2,14 @@
 {
     public class User
     {
-        public Guid Guid { get; private set; }
+        public Guid Id { get; private set; }
         public string Login { get; private set; }
         public string PasswordHash { get; private set; }
 
         public User() { }
         public User(Guid guid, string login, string passwordHash)
         {
-            Guid = guid;
+            Id = guid;
             Login = login;
             PasswordHash = passwordHash;
         }

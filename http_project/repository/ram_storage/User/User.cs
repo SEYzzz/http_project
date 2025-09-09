@@ -13,9 +13,9 @@ namespace http_project.repository.ram_storage.User
             {
                 if (dataByLogin.ContainsKey(user.Login))
                     throw new UserAlreadyExistsException($"User with login {user.Login} already exists");
-                data.Add(user.Guid, user);
+                data.Add(user.Id, user);
                 dataByLogin.Add(user.Login, user);
-                return user.Guid;
+                return user.Id;
             }
             catch(Exception ex) when (ex is not  UserAlreadyExistsException)
             {

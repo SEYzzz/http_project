@@ -12,7 +12,7 @@ namespace http_project.usecases.User
             this.repo = repo;
         }
 
-        public async Task<string> AddUserAsync(string login, string password)
+        public async Task<Guid> AddUserAsync(string login, string password)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace http_project.usecases.User
                     passwordHash
                 );
                 repo.AddUser(user);
-                return user.Guid.ToString();
+                return user.Id;
             }
             catch(Exception ex)
             {
