@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace http_project.controllers.Auth
@@ -18,6 +19,7 @@ namespace http_project.controllers.Auth
             this.userService = userService;
             this.sessionService = sessionService;
         }
+
         /// <summary>
         /// Регистрация нового пользователя
         /// </summary>
@@ -25,12 +27,12 @@ namespace http_project.controllers.Auth
         /// <param name="password"></param>
         /// <returns>Guid зарегистрированного пользователя</returns>
         [HttpGet("/register")]
-        public async Task<ActionResult<Guid>> Register(string login, string password)
+        public async Task<ActionResult<Guid>> Register(types.RegisterRequest request)
         {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Login and password are required");
 
-            var userId = await userService.AddUserAsync(login, password);
+            var userId = await userService.AddUserAsync(request.Login, request.Password);
             await sessionService.AddAsync(userId);
             return Ok(new { userID = userId });
         }
@@ -43,14 +45,14 @@ namespace http_project.controllers.Auth
         /// <returns></returns>
         /// <exception cref="InvalidDataException"></exception>
         [HttpPost("/login")]
-        public async Task<ActionResult> Login(string login, string password)
+        public async Task<ActionResult> Login(types.LoginRequest request)  // Добавить [From Body]?
         {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Login and password are required");
 
             try
             {
-                var user = await userService.GetByLoginAsync(login); // Проверка пароля и тд где
+                var user = await userService.GetByLoginAsync(request.Login); // Проверка пароля и тд где
                 await sessionService.AddAsync(user.Id);
 
                 return Ok();

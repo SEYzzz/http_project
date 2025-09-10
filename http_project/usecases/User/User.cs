@@ -27,7 +27,7 @@ namespace http_project.usecases.User
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message);   // Вылетает ошибка когда один логин и разные пароли
             }
         }
 
